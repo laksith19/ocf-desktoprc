@@ -1,0 +1,38 @@
+# Laksith's OCF desktoprc
+
+set -euo pipefail
+set -x
+
+echo "Starting desktop config..."
+
+# Remove all desktop icons :)
+rm -rf ~/Desktop/*
+
+# Set dark theme
+plasma-apply-lookandfeel -a org.kde.breezedark.desktop
+
+# Set wallpaper
+plasma-apply-wallpaperimage ~/remote/.config/desktop/wallpaper.jpg
+
+# Set cursor theme
+plasma-apply-cursortheme "Adwaita"
+
+# Symlink ssh configs / keys from remote
+ln -s ~/remote/.ssh ~/.ssh
+
+# Execute all enabled Plasma scripts
+for script in ~/remote/.config/desktop/plasma-desktop-scripts/enabled/*; do
+  echo "Running $script"
+  # Rename to better var name later - load in script
+  temp_text=$(cat "$script")
+  qdbus org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell.evaluateScript "$temp_text"
+  echo "Completed Running $script"
+done
+
+# Install home manager and load persistent home.nix on remote
+nix run home-manager -- init --switch ~/remote/.config/desktop/home-manager
+
+# Don't put much beyond this as it'll take a while to finish getting and installing custom packages 
+# Unless you need packages that will be installed by home-manager
+
+echo "Completed, running desktoprc!"

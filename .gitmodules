@@ -1,0 +1,3 @@
+[submodule "home-manager"]
+	path = home-manager
+	url = git@github.com:laksith19/ocf-home-manager
