@@ -21,7 +21,7 @@ plasma-apply-cursortheme "Adwaita"
 ln -s ~/remote/.ssh ~/.ssh
 
 # Execute all enabled Plasma scripts
-for script in ~/remote/.config/desktop/plasma-desktop-scripts/enabled/*; do
+for script in ~/remote/.config/desktop/plasma-desktop-scripts/*; do
   echo "Running $script"
   # Rename to better var name later - load in script
   temp_text=$(cat "$script")

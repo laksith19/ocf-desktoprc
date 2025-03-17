@@ -1,1 +1,0 @@
-../available/remove-panels.js
