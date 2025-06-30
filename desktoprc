@@ -8,6 +8,12 @@ echo "Starting desktop config..."
 # Remove all desktop icons :)
 rm -rf ~/Desktop/*
 
+# Remove default firefox config
+rm -rf ~/.mozilla
+
+# Symlink firefox config from remote
+ln -s ~/remote/.mozilla ~/.mozilla
+
 # Set dark theme
 plasma-apply-lookandfeel -a org.kde.breezedark.desktop
 
@@ -29,8 +35,10 @@ for SCRIPT_FILE in ~/remote/.config/desktop/plasma-desktop-scripts/*; do
   echo "Completed Running $script"
 done
 
-# Install home manager and load persistent home.nix on remote
-nix run home-manager -- init --switch ~/remote/.config/desktop/home-manager
+# Symlink default home manager from remote
+ln -s ~/remote/.config/desktop/home-manager ~/.config/home-manager
+# Install home manager and setup user home
+nix run home-manager switch
 
 # Don't put much beyond this as it'll take a while to finish getting and installing custom packages 
 # Unless you need packages that will be installed by home-manager
