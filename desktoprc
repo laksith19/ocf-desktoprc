@@ -35,10 +35,8 @@ for SCRIPT_FILE in ~/remote/.config/desktop/plasma-desktop-scripts/*; do
   echo "Completed Running $script"
 done
 
-# copy over home manager config from remote
-cp -r ~/remote/.config/desktop/home-manager ~/.config/home-manager
 # Install home manager and setup user home
-nix run home-manager switch
+nix run home-manager -- switch --flake ~/remote/.config/desktop/home-manager 
 
 # Don't put much beyond this as it'll take a while to finish getting and installing custom packages 
 # Unless you need packages that will be installed by home-manager
