@@ -35,8 +35,8 @@ for SCRIPT_FILE in ~/remote/.config/desktop/plasma-desktop-scripts/*; do
   echo "Completed Running $script"
 done
 
-# Symlink default home manager from remote
-ln -s ~/remote/.config/desktop/home-manager ~/.config/home-manager
+# copy over home manager config from remote
+cp -r ~/remote/.config/desktop/home-manager ~/.config/home-manager
 # Install home manager and setup user home
 nix run home-manager switch
 
