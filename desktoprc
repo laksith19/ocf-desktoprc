@@ -5,35 +5,14 @@ set -x
 
 echo "Starting desktop config..."
 
-# Remove all desktop icons :)
-rm -rf ~/Desktop/*
-
-# Remove default firefox config
-rm -rf ~/.mozilla
+# Remove all default OCF configs :)
+rm -rf ~/Desktop ~/.config ~/.local ~/.gtkrc-2.0 ~/.viminfo ~/.mozilla
 
 # Symlink firefox config from remote
 ln -s ~/remote/.mozilla ~/.mozilla
 
-# Set dark theme
-plasma-apply-lookandfeel -a org.kde.breezedark.desktop
-
-# Set wallpaper
-plasma-apply-wallpaperimage ~/remote/.config/desktop/wallpaper.jpg
-
-# Set cursor theme
-plasma-apply-cursortheme "Adwaita"
-
 # Symlink ssh configs / keys from remote
 ln -s ~/remote/.ssh ~/.ssh
-
-# Execute all enabled Plasma scripts
-for SCRIPT_FILE in ~/remote/.config/desktop/plasma-desktop-scripts/*; do
-  echo "Running $SCRIPT_FILE"
-  # Rename to better var name later - load in script
-  script=$(cat "$SCRIPT_FILE")
-  qdbus org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell.evaluateScript "$script"
-  echo "Completed Running $script"
-done
 
 # Install home manager and setup user home
 nix run home-manager -- switch --flake ~/remote/.config/desktop/home-manager 
